@@ -12,9 +12,31 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    
+                    <!-- Links de Navegação Dinâmicos -->
+                    @if (Auth::user()->role == 'doador')
+                        
+                        <!-- Links de Doador -->
+                        <x-nav-link :href="route('doador.historico')" :active="request()->routeIs('doador.historico')">
+                            {{ __('Meu Histórico') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('doador.doacao.create')" :active="request()->routeIs('doador.doacao.create')">
+                            {{ __('Fazer Doação') }}
+                        </x-nav-link>
+
+                    @elseif (Auth::user()->role == 'instituicao')
+                        
+                        <!-- Links de Instituição -->
+                        <x-nav-link :href="route('instituicao.estoque.index')" :active="request()->routeIs('instituicao.estoque.index')">
+                            {{ __('Meu Estoque') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('instituicao.doacao.index')" :active="request()->routeIs('instituicao.doacao.index')">
+                            {{ __('Doações Recebidas') }}
+                        </x-nav-link>
+
+                    @endif
+                    <!-- Fim dos Links Dinâmicos -->
+
                 </div>
             </div>
 
@@ -67,9 +89,31 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            
+            <!-- Links de Navegação Dinâmicos (Mobile) -->
+            @if (Auth::user()->role == 'doador')
+                
+                <!-- Links de Doador -->
+                <x-responsive-nav-link :href="route('doador.historico')" :active="request()->routeIs('doador.historico')">
+                    {{ __('Meu Histórico') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('doador.doacao.create')" :active="request()->routeIs('doador.doacao.create')">
+                    {{ __('Fazer Doação') }}
+                </x-responsive-nav-link>
+
+            @elseif (Auth::user()->role == 'instituicao')
+                
+                <!-- Links de Instituição -->
+                <x-responsive-nav-link :href="route('instituicao.estoque.index')" :active="request()->routeIs('instituicao.estoque.index')">
+                    {{ __('Meu Estoque') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('instituicao.doacao.index')" :active="request()->routeIs('instituicao.doacao.index')">
+                    {{ __('Doações Recebidas') }}
+                </x-responsive-nav-link>
+
+            @endif
+            <!-- Fim dos Links Dinâmicos (Mobile) -->
+
         </div>
 
         <!-- Responsive Settings Options -->
